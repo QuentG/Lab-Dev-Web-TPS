@@ -1,3 +1,5 @@
+<?php require_once 'checkConnection.php' ?>
+
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -6,9 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Météo - Bordeaux</title>
     <?php
-    $now = (new DateTime())->format('H');
-    if ($now >= 7 && $now <= 19) {
-        ?>
+        $now = (new DateTime())->format('H');
+        if ($now >= 7 && $now <= 19) {
+    ?>
         <link rel="stylesheet" href="./light.css">
     <?php } else { ?>
         <link rel="stylesheet" href="./dark.css">

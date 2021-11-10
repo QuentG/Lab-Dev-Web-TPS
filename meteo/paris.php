@@ -1,3 +1,5 @@
+<?php require_once 'checkConnection.php' ?>
+
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
