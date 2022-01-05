@@ -2,14 +2,19 @@
 
 header('Content-type: text/plain');
 
-require_once("./objects/pokemon.php");
-require_once("./objects/pokeball.php");
+require_once("./objects/Carapuce.php");
+require_once("./objects/Salameche.php");
+require_once("./objects/Pokeball.php");
 
 $pokeball = new Pokeball('Pokeball', 10);
 
-$pokemon = new Pokemon('Carapuce', 100, 8, 'Eau', 20);
+echo 'Carapuce à toi de jouer ! ' . PHP_EOL;
+$pokemon = new Carapuce(5);
+echo '-----------------' . PHP_EOL;
 
-$pokemonEnnemi = new Pokemon('Salameche', 100, 5, 'Feu', 10);
+echo 'Salamèche vient d\'apparaitre' . PHP_EOL;
+$pokemonEnnemi = new Salameche(6);
+echo '-----------------' . PHP_EOL;
 
 $pokemon->attack($pokemonEnnemi);
 $pokemonEnnemi->attack($pokemon);

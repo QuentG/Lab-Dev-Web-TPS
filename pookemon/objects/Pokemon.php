@@ -1,24 +1,34 @@
 <?php
 
-class Pokemon
+require_once("PokemonInterface.php");
+
+// Classe Parent = Une classe sur laquelle d'autre classe vont se baser
+abstract class Pokemon implements PokemonInterface
 {
     private string $name;
     private float $life;
     private float $maxLife;
     private int $level;
     private string $type;
-    private int $strength;
+    protected int $strength;
 
-    public function __construct(string $name, float $maxLife, int $level, string $type, int $strength)
+    public function __construct(string $name, float $maxLife, int $life, int $level, string $type, int $strength)
     {
         $this->name = $name;
 
-        $this->life = $maxLife;
+        $this->life = $life;
         $this->maxLife = $maxLife;
 
         $this->level = $level;
         $this->type = $type;
         $this->strength = $strength;
+
+        static::sayHi();
+    }
+
+    public static function sayHi(): void
+    {
+        echo 'Hi !' . "\n";
     }
 
     public function levelUp(): void
