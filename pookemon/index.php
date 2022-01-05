@@ -2,35 +2,96 @@
 
 header('Content-type: text/plain');
 
-require_once("./objects/Carapuce.php");
-require_once("./objects/Salameche.php");
-require_once("./objects/Pokeball.php");
+/* ---------------------------------
+            IMPORTS
+--------------------------------- */
 
-$pokeball = new Pokeball('Pokeball', 10);
+// Interface needed for Ball && Heal
+require_once('./objects/UsableInterface.php');
 
-echo 'Carapuce à toi de jouer ! ' . PHP_EOL;
-$pokemon = new Carapuce(5);
-echo '-----------------' . PHP_EOL;
+// Pokemons
+require_once('./objects/Pokemons/Carapuce.php');
+require_once('./objects/Pokemons/Bulbizarre.php');
+require_once('./objects/Pokemons/Salameche.php');
 
-echo 'Salamèche vient d\'apparaitre' . PHP_EOL;
-$pokemonEnnemi = new Salameche(6);
-echo '-----------------' . PHP_EOL;
+// Potions
+require_once('./objects/Potions/Potion.php');
+require_once('./objects/Potions/Superpotion.php');
+require_once('./objects/Potions/Hyperpotion.php');
+require_once('./objects/Potions/Potionmax.php');
 
-$pokemon->attack($pokemonEnnemi);
-$pokemonEnnemi->attack($pokemon);
+// Balls
+require_once('./objects/Balls/Pokeball.php');
+require_once('./objects/Balls/Superball.php');
+require_once('./objects/Balls/Hyperball.php');
+require_once('./objects/Balls/Masterball.php');
 
-$pokemon->attack($pokemonEnnemi);
-$pokemonEnnemi->attack($pokemon);
+// Bot
+require_once('./objects/Bot.php');
 
-echo "Lancement d'une " . $pokeball->getName() . " ! \n";
+/* ---------------------------------
+            PROGRAM
+--------------------------------- */
 
-echo '-----------------' . PHP_EOL;
+echo "Vous invoquez Carapuce" . PHP_EOL;
+$squirtle = new Carapuce(5);
 
-if ($pokeball->catch($pokemonEnnemi)) {
-    $pokemon->levelUp();
+echo "Votre ennemi invoque un Salamèche" . PHP_EOL;
+$charmander = new Salameche(8);
 
-    echo "Fin du combat \n";
-} else {
-    echo "La tentative de capture à échouée... \n";
-    echo "Le pokémon s'est enfui... \n";
+$bag = [];
+$bag[] = new Potion();
+$bag[] = new Potion();
+$bag[] = new Superpotion();
+$bag[] = new Pokeball();
+$bag[] = new Pokeball();
+$bag[] = new Pokeball();
+
+$bot = new Bot($squirtle, $charmander, $bag);
+
+echo PHP_EOL;
+echo PHP_EOL;
+echo 'Début du combat !' . PHP_EOL;
+echo '-----------------'. PHP_EOL;
+echo PHP_EOL;
+
+$myTurn = (bool) random_int(0, 1);
+$end = false;
+
+while (!$end) {
+    echo $myTurn ? 'C\'est à votre tour : ' . PHP_EOL : 'C\'est au tour de votre adversaire' . PHP_EOL;
+    echo "Carapuce : ". $squirtle->getLife(). " PV - Salamèche : ". $charmander->getLife() . " PV". PHP_EOL;
+
+    if ($myTurn) {
+        $captureSuccess = $bot->play();
+        if ($captureSuccess) {
+            $end = true;
+        }
+    } else {
+        $damages = $charmander->attack($squirtle);
+        echo $charmander->getName() . ' attaque '. $squirtle->getName() . ' et inflige '. $damages. ' dégâts.' . PHP_EOL;
+    }
+
+    if ($squirtle->isDead() || $charmander->isDead()) {
+        $end = true;
+    }
+
+    echo PHP_EOL;
+
+    $myTurn = !$myTurn;
 }
+
+echo '-----------------'. PHP_EOL;
+
+if ($captureSuccess ?? false) {
+    echo 'Bien joué, vous avez capturez Salamèche !' . PHP_EOL;
+    echo 'Ça c\'était du sacré combat !' . PHP_EOL;
+} elseif ($squirtle->isDead()) {
+    echo 'Raté ! Votre Carapuce est KO !' . PHP_EOL;
+} elseif ($charmander->isDead()) {
+    echo 'Raté ! Vous avez mis ce pauvre Salamèche KO !' . PHP_EOL;
+}
+
+echo '-----------------'. PHP_EOL;
+echo PHP_EOL;
+echo 'Fin du combat !';

@@ -13,11 +13,21 @@ class Salameche extends Pokemon
         $type = 'Feu';
         $strength = 10 + 2 * $level;
 
-        parent::__construct($name, $maxLife, $life, $level, $type, $strength);
+        parent::__construct($name, $life, $maxLife, $level, $type, $strength);
     }
 
     public static function sayHi(): void
     {
-        echo "Sala !\n";
+        echo "Sala !" . PHP_EOL;
+    }
+
+    public function levelUp(): void
+    {
+        $this->setLevel(1)
+            ->setMaxLife(5)
+            ->setLife(5)
+            ->setStrength(4);
+
+        echo $this->getName() . ' level up !' . PHP_EOL;
     }
 }
