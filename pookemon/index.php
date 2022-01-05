@@ -15,10 +15,9 @@ $pokemon->attack($pokemonEnnemi);
 $pokemonEnnemi->attack($pokemon);
 
 $pokemon->attack($pokemonEnnemi);
-
 $pokemonEnnemi->attack($pokemon);
 
-echo "Lancement d'une " . $pokeball->name . " ! \n";
+echo "Lancement d'une " . $pokeball->getName() . " ! \n";
 
 echo '-----------------' . PHP_EOL;
 

@@ -2,8 +2,8 @@
 
 class Pokeball
 {
-    public string $name;
-    public int $level;
+    private string $name;
+    private int $level;
 
     public function __construct(string $name, int $level)
     {
@@ -13,16 +13,36 @@ class Pokeball
 
     public function catch(Pokemon $target): bool
     {
-        $successChances = round((($target->maxLife - $target->life) / $target->maxLife) * (1 + ($this->level - $target->level) / 25), 2);
+        $successChances = round((($target->getMaxLife() - $target->getLife()) / $target->getMaxLife()) * (1 + ($this->level - $target->getLevel()) / 25), 2);
         $random = rand(1, 100) / 100;
 
         if ($successChances >= $random) {
-            echo $target->name . " a été capturé ! \n";
+            echo $target->getName() . " a été capturé ! \n";
             echo '-----------------' . PHP_EOL;
 
             return true;
         }
 
         return false;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $newName): void
+    {
+        $this->name = $newName;
+    }
+
+    public function getLevel(): int
+    {
+        return $this->level;
+    }
+
+    public function setLevel($level): void
+    {
+        $this->level = $level;
     }
 }

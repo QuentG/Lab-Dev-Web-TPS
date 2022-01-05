@@ -2,12 +2,12 @@
 
 class Pokemon
 {
-    public string $name;
-    public float $life;
-    public float $maxLife;
-    public int $level;
-    public string $type;
-    public int $strength;
+    private string $name;
+    private float $life;
+    private float $maxLife;
+    private int $level;
+    private string $type;
+    private int $strength;
 
     public function __construct(string $name, float $maxLife, int $level, string $type, int $strength)
     {
@@ -23,7 +23,7 @@ class Pokemon
 
     public function levelUp(): void
     {
-        $this->level += 1;
+        $this->level++;
         $this->life += 5;
         $this->strength += 2;
 
@@ -50,5 +50,30 @@ class Pokemon
     public function decreaseLife(float $life): void
     {
         $this->life -= $life;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getMaxLife(): float
+    {
+        return $this->maxLife;
+    }
+
+    public function getLife(): float
+    {
+        return $this->life;
+    }
+
+    public function getLevel(): int
+    {
+        return $this->level;
+    }
+
+    public function getStrength(): int
+    {
+        return $this->strength;
     }
 }
